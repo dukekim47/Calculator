@@ -1,0 +1,62 @@
+@import "colors/colors";
+
+
+body {
+    height: 100vh;
+    background-color: $richBlack;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calc {
+    display: relative;
+    height: 80vh;
+    width: 30vw;
+    border-radius: 20px;
+    background-color: $darkBlue;
+}
+
+.display {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 30px;
+    top: 2%;
+    height: 15%;
+    width: 93%;
+    background-color: $seaBlue;
+    margin: 0 auto;
+    flex-direction: row-reverse;
+    align-items: center;
+    font-size: 1em;
+}
+
+.input {
+    background-color: $darkBlue;
+    border: 3px solid $richBlack;
+    height: 80%;
+    top: 3%;
+    width: 93%;
+    display: grid;
+    position: relative;
+    border-radius: 30px;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.btn {
+    box-sizing: border-box;
+    display: flex;
+    margin: 10% auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 70px;
+    background: white;
+    text-align: center;
+}
+
+.fr-btn {
+    background-color: $goldYellow;
+}
