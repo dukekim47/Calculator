@@ -1,4 +1,5 @@
 @import "colors/colors";
+@import "fonts/fonts";
 
 
 body {
@@ -11,15 +12,17 @@ body {
 
 .calc {
     display: relative;
-    height: 80vh;
+    height: 70vh;
     width: 30vw;
     border-radius: 20px;
     background-color: $darkBlue;
     flex-wrap: wrap;
+    border: 1px solid white;
 }
 
 .display {
-    display: flex;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
     position: relative;
     box-sizing: border-box;
     border-radius: 30px;
@@ -28,12 +31,13 @@ body {
     width: 93%;
     background-color: $seaBlue;
     margin: 0 auto;
-    flex-direction: row-reverse;
-    align-items: center;
-    font-size: 1em;
+    border: 1px solid white;
+    box-shadow: 0px 0px 5px 1px white;
 }
 
 .input {
+    box-sizing: border-box;
+    padding: 1rem;
     background-color: $darkBlue;
     border: 3px solid $richBlack;
     height: 80%;
@@ -45,28 +49,68 @@ body {
     margin: 0 auto;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
+    border: 2px solid $seaBlue;
+    box-shadow: 0px 0px 10px 3px $seaBlue;
+    
+    
 }
 
 .btn {
-    box-sizing: border-box;
+    box-sizing: content-box;
+    justify-self: center;
+    align-self: center;
     display: flex;
-    margin: auto;
-    width: 70%;
-    height: 70%;
+    width: 90%;
+    height: 90%;
     border-radius: 70px;
     background: white;
     text-align: center;
     justify-content: center;
-    align-items: center;;
+    align-items: center;
+    font-family: $plex;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: 0px 0px 5px 1px white;
 }
 
 .fr-btn {
+    background-color: $mustardYellow;
+}
+
+//Button IDS//
+#equal {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    width: 95%;
+    border-radius: 50px;
+}
+
+.operator, #equal {
     background-color: $goldYellow;
 }
 
-
 // Typography //
 
-h1 {
-    font-size: 3vw;
+#old-display {
+    box-sizing: border-box;
+    width: 100%;
+    height: 35%;
+    font-size: 2vw;
+    text-align: right;
+    padding-right: 2vw;
+    color: white;
+    font-weight: 200;
+}
+
+#new-display {
+    box-sizing: border-box;
+    height: 65%;
+    width: 100%;
+    font-size: 2vw;
+    text-align: right;
+    padding-right: 1vw;
+    color: white;
 }

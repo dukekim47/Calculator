@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@700&display=swap");
 body {
   height: 100vh;
   background-color: #000814;
@@ -14,18 +15,20 @@ body {
 
 .calc {
   display: relative;
-  height: 80vh;
+  height: 70vh;
   width: 30vw;
   border-radius: 20px;
   background-color: #001e3d;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  border: 1px solid white;
 }
 
 .display {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[2];
+      grid-template-rows: repeat(2, 1fr);
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -35,17 +38,15 @@ body {
   width: 93%;
   background-color: #003566;
   margin: 0 auto;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 1em;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px 1px white;
+          box-shadow: 0px 0px 5px 1px white;
 }
 
 .input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 1rem;
   background-color: #001e3d;
   border: 3px solid #000814;
   height: 80%;
@@ -60,17 +61,22 @@ body {
       grid-template-columns: repeat(4, 1fr);
   -ms-grid-rows: (1fr)[5];
       grid-template-rows: repeat(5, 1fr);
+  border: 2px solid #003566;
+  -webkit-box-shadow: 0px 0px 10px 3px #003566;
+          box-shadow: 0px 0px 10px 3px #003566;
 }
 
 .btn {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  justify-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: auto;
-  width: 70%;
-  height: 70%;
+  width: 90%;
+  height: 90%;
   border-radius: 70px;
   background: white;
   text-align: center;
@@ -80,13 +86,52 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  font-family: "IBM Plex Serif", serif;
+  font-size: 1vw;
+  cursor: pointer;
+}
+
+.btn:hover {
+  -webkit-box-shadow: 0px 0px 5px 1px white;
+          box-shadow: 0px 0px 5px 1px white;
 }
 
 .fr-btn {
-  background-color: #ffd60a;
+  background-color: rgba(255, 196, 0, 0.849);
 }
 
-h1 {
-  font-size: 3vw;
+#equal {
+  -ms-grid-column: 3;
+      grid-column-start: 3;
+  grid-column-end: 5;
+  width: 95%;
+  border-radius: 50px;
+}
+
+.operator, #equal {
+  background-color: rgba(255, 214, 10, 0.945);
+}
+
+#old-display {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 35%;
+  font-size: 2vw;
+  text-align: right;
+  padding-right: 2vw;
+  color: white;
+  font-weight: 200;
+}
+
+#new-display {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 65%;
+  width: 100%;
+  font-size: 2vw;
+  text-align: right;
+  padding-right: 1vw;
+  color: white;
 }
 /*# sourceMappingURL=main.css.map */

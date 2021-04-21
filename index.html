@@ -10,31 +10,34 @@
 <body>
     <main>
         <div class="calc">
-          <div class="display"><h1>output goes here</h1></div>
+          <div class="display">
+            <div id = "old-display"></div>
+            <div id ="new-display"></div>
+          </div>
           <div class="input">
-            <div class="btn fr-btn">0</div>
-            <div class="btn fr-btn">0</div>
-            <div class="btn fr-btn">0</div>
-            <div class="btn fr-btn">0</div>
-            <div class="btn sr-btn">0</div>
-            <div class="btn sr-btn">0</div>
-            <div class="btn sr-btn">0</div>
-            <div class="btn sr-btn">0</div>
-            <div class="btn tr-btn">0</div>
-            <div class="btn tr-btn">0</div>
-            <div class="btn tr-btn">0</div>
-            <div class="btn tr-btn">0</div>
-            <div class="btn qr-btn">0</div>
-            <div class="btn qr-btn">0</div>
-            <div class="btn qr-btn">0</div>
-            <div class="btn qr-btn">0</div>
-            <div class="btn lr-btn">0</div>
-            <div class="btn lr-btn">0</div>
-            <div class="btn lr-btn">0</div>
-            <div class="btn lr-btn">0</div>
+            <div class="btn fr-btn" id = "ce">CE</div>
+            <div class="btn fr-btn" id = "del">DEL</div>
+            <div class="btn fr-btn" id = "percent">%</div>
+            <div class="btn fr-btn operator">/</div>
+            <div class="btn sr-btn number">7</div>
+            <div class="btn sr-btn number">8</div>
+            <div class="btn sr-btn number">9</div>
+            <div class="btn sr-btn operator">*</div>
+            <div class="btn tr-btn number">4</div>
+            <div class="btn tr-btn number">5</div>
+            <div class="btn tr-btn number">6</div>
+            <div class="btn tr-btn operator">-</div>
+            <div class="btn qr-btn number">1</div>
+            <div class="btn qr-btn number">2</div>
+            <div class="btn qr-btn number">3</div>
+            <div class="btn qr-btn operator">+</div>
+            <div class="btn lr-btn number">0</div>
+            <div class="btn lr-btn number">.</div>
+            <div class="btn lr-btn" id ="equal">=</div>
           </div>
         </div>
     </main>
+    <script src="script/script.js"></script>
     
 </body>
 </html>
