@@ -3,22 +3,27 @@ const operators = document.querySelectorAll(".operator");
 const numbers = document.querySelectorAll(".number");
 const clearD = document.getElementById("ce");
 const deleteD = document.getElementById("del");
-const percent = document.getElementById("percent");
+const plusminus = document.getElementById("plusminus");
 const oldD = document.getElementById("old-display");
 const newD = document.getElementById("new-display");
 const equal = document.getElementById("equal");
 
 let protoDisplay = [];
-let total = 0;
-let opToggle = false;
+let opToggle = {number: 0, toggle: false}
+let runEquals = false;
+let operatorUse = false;
 
 //Event Listeners//
 
 function numberInput () {
     numbers.forEach((button) => {
         button.addEventListener("click", () => {
-            newD.textContent += button.textContent;
-            opToggle = false;
+                newD.textContent += button.textContent;
+             if (opToggle.number >1 && opToggle.toggle == false) {
+                newD.textContent = button.textContent;
+                opToggle.toggle = true;
+                operator = false;
+            } 
         })
     })
 }
@@ -28,10 +33,26 @@ numberInput();
 function operatorInput () {
     operators.forEach((operator) => {
         operator.addEventListener("click", () => {
-            protoDisplay.push(newD.textContent);
-            protoDisplay.push(operator.textContent);
-            oldD.textContent += newD.textContent + operator.textContent
-            newD.textContent = "";
+            if (operatorUse == false) {
+                operatorUse = true;
+                if (runEquals == false) {
+                    protoDisplay.push(newD.textContent, operator.textContent);
+                    oldD.textContent += newD.textContent + operator.textContent;
+                    newD.textContent = "";
+                    toggleOperator();
+                    runOperator();
+                } else if (runEquals == true) {
+                    protoDisplay.push(operator.textContent);
+                    oldD.textContent += operator.textContent;
+                    newD.textContent ="";
+                    toggleOperator();
+                    runOperator();
+                    runEquals = false;               
+                }
+            } else if (operatorUse == true) {
+                protoDisplay[protoDisplay.length-1] = operator.textContent;
+                oldD.textContent = oldD.textContent.replace(oldD.textContent[oldD.textContent.length-1], operator.textContent);
+            }
         })
     })
 }
@@ -42,133 +63,75 @@ clearD.addEventListener("click", () => {
     newD.textContent = "";
     oldD.textContent = "";
     protoDisplay = [];
+    opToggle = {number: 0, toggle: false};
+    runEquals = false;
+    operatorUse = false;
 })
 
 deleteD.addEventListener("click", () => {
     newD.textContent = newD.textContent.slice(0, newD.textContent.length-1)
 })
 
-equal.addEventListener("click", calculate)
+plusminus.addEventListener("click", () => {
+    newD.textContent = -parseFloat(newD.textContent);
+})
 
+equal.addEventListener("click", () => {
+    if (runEquals == false) {
+        calculate();
+        operatorUse = false;
+    }
+})
 
 //Functions//
-
-
-// This changes all string values to numbers, Double - - is turned into +//
-function validateNum () {
-    for (let i = 0; i < protoDisplay.length; i++) {
-        if (protoDisplay[i] == "-" && protoDisplay[i+1] == "-") {
-            protoDisplay.splice[i], 2, "+";
-        } else if (protoDisplay[i] == "-" && protoDisplay[i+1] !== "-") {
-            protoDisplay.splice(i, 2, -protoDisplay[i+1]);
-        } else if (protoDisplay[i].includes(".")) {
-            protoDisplay.splice(i, 1, parseFloat(protoDisplay[i]))
-        } else if (!isNaN(parseInt(protoDisplay[i]))) {
-            protoDisplay.splice(i, 1, parseInt(protoDisplay[i]))
-        }
-    }
-}
-
-function validateSymbols () {
-    for (let i = 0; i < protoDisplay.length; i++) {
-        if (isNaN(protoDisplay[i]) && isNaN(protoDisplay[i+1])) {
-            protoDisplay.splice(i, 2, protoDisplay[i+1]);
-        }
-    }
-}
-
-
 function calculate () {
     checkLast();
-    oldD.textContent += newD.textContent
-    validateNum();
-    bodMas();
-    removeOperators();
-    totalSum();
-    newD.textContent = protoDisplay;
-    protoDisplay = [protoDisplay];
+    toggleOperator();
+    runOperator();
+    protoDisplay.pop();
+    runEquals = true;
 }
-
-function test () {
-    validateNum();
-
-}
-/*
-function bodMas () {
-    while (protoDisplay.includes("/") || protoDisplay.includes("*")) {
-        for (let i = 0; i < protoDisplay.length; i++) {
-            if (protoDisplay[i] == "/") {
-                protoDisplay.splice(i-1,3, protoDisplay[i-1] / protoDisplay[i+1]);
-            } else if (protoDisplay[i] == "*") {
-                protoDisplay.splice(i-1,3, protoDisplay[i-1] * protoDisplay[i+1])
-            }
-        }
-    }
-}
-*/
 
 function toggleOperator () {
-    opToggle === false ? opToggle = true : opToggle = false; 
-}
-
-function continueArray (ans) {
-    protoDisplay = [ans];
+    opToggle.number++
+    switch (opToggle.toggle) {
+        case false :
+            opToggle.toggle = true;
+            break;
+        case true:
+            opToggle.toggle = false;
+            break;
+    }
 }
 
 function runOperator() {
-    if (opToggle == true) {
+    if (opToggle.number >= 2 && runEquals == false) {
         switch (protoDisplay[1]) {
             case "/":
                 newD.textContent = protoDisplay[0] / protoDisplay[2];
-                continueArray(newD.textContent);
+                protoDisplay = [newD.textContent, oldD.textContent[oldD.textContent.length-1]]
                 break;
             case "*":
                 newD.textContent = protoDisplay[0] * protoDisplay[2];
-                continueArray(newD.textContent);
+                protoDisplay = [newD.textContent, oldD.textContent[oldD.textContent.length-1]]
                 break;
-            default:
+            case "-":
+                newD.textContent = parseFloat(protoDisplay[0]) - parseFloat(protoDisplay[2]);
+                protoDisplay = [newD.textContent, oldD.textContent[oldD.textContent.length-1]]
+                break;
+            case "+":
+                newD.textContent = parseFloat(protoDisplay[0]) + parseFloat(protoDisplay[2]);
+                protoDisplay = [newD.textContent, oldD.textContent[oldD.textContent.length-1]]
                 break;
         }
-    }
+    } 
 }
 
-function bodMas () {
-    while (protoDisplay.includes("/")) {
-        for (let i = 0; i < protoDisplay.length; i++) {
-            if (protoDisplay[i] == "/") {
-                protoDisplay.splice(i-1,3, protoDisplay[i-1] / protoDisplay[i+1]);
-            } 
-        }
-    }
-    while (protoDisplay.includes("*")) {
-        for (let i = 0; i < protoDisplay.length; i++) {
-            if (protoDisplay[i] == "*") {
-                protoDisplay.splice(i-1,3, protoDisplay[i-1] * protoDisplay[i+1])
-            }
-        }
-
-    }
-}
 function checkLast () {
     if (isNaN(protoDisplay[protoDisplay.length-1]) && newD.textContent !== "") {
         protoDisplay.push(newD.textContent);
     } else if (isNaN(protoDisplay[protoDisplay.length-1]) && newD.textContent == "") {
         protoDisplay.pop(protoDisplay.length-1);
     }
-}
-
-function removeOperators () {
-    while (protoDisplay.includes("") || protoDisplay.includes("+")) {
-        for (let i = 0; i < protoDisplay.length; i++) {
-            if (protoDisplay[i] == "") {
-                protoDisplay.splice(i,1);
-            } else if (protoDisplay[i] == "+") {
-                protoDisplay.splice(i,1)
-            }
-        }
-    }
-}
-
-function totalSum () {
-    protoDisplay = protoDisplay.reduce((a, b) => a + b)
+    oldD.textContent += newD.textContent;
 }
