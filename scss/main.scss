@@ -19,6 +19,21 @@ body {
     flex-wrap: wrap;
     border: 1px solid white;
 }
+@media only screen and (max-width: 800px) { 
+    .calc {
+        height: 90vh;
+        width: 80vw;
+    }
+    .btn {
+        font-size: 3vw;
+    }
+}
+
+@media only screen and (min-width: 600px) { 
+    .btn {
+        font-size: 1.3vw;
+    }
+}
     
 .display {
     display: grid;
@@ -68,7 +83,6 @@ body {
     justify-content: center;
     align-items: center;
     font-family: $plex;
-    font-size: 1vw;
     cursor: pointer;
 }
 
