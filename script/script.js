@@ -14,21 +14,20 @@ let runEquals = false;
 let operatorUse = false;
 
 //Event Listeners//
+window.addEventListener("keydown", setInput);
 
 function numberInput () {
     numbers.forEach((button) => {
         button.addEventListener("click", () => {
                 newD.textContent += button.textContent;
+                operatorUse = false;
              if (opToggle.number >1 && opToggle.toggle == false) {
                 newD.textContent = button.textContent;
                 opToggle.toggle = true;
-                operator = false;
             } 
         })
     })
 }
-
-numberInput();
 
 function operatorInput () {
     operators.forEach((operator) => {
@@ -49,28 +48,13 @@ function operatorInput () {
                     runOperator();
                     runEquals = false;               
                 }
-            } else if (operatorUse == true) {
+            } else if (operatorUse == true && newD.textContent == "") {
                 protoDisplay[protoDisplay.length-1] = operator.textContent;
                 oldD.textContent = oldD.textContent.replace(oldD.textContent[oldD.textContent.length-1], operator.textContent);
-            }
+            } 
         })
     })
 }
-
-operatorInput();
-
-clearD.addEventListener("click", () => {
-    newD.textContent = "";
-    oldD.textContent = "";
-    protoDisplay = [];
-    opToggle = {number: 0, toggle: false};
-    runEquals = false;
-    operatorUse = false;
-})
-
-deleteD.addEventListener("click", () => {
-    newD.textContent = newD.textContent.slice(0, newD.textContent.length-1)
-})
 
 plusminus.addEventListener("click", () => {
     newD.textContent = -parseFloat(newD.textContent);
@@ -83,6 +67,9 @@ equal.addEventListener("click", () => {
     }
 })
 
+clearD.addEventListener("click", resetCalc);
+deleteD.addEventListener("click", deleteInput);
+
 //Functions//
 function calculate () {
     checkLast();
@@ -92,6 +79,22 @@ function calculate () {
     runEquals = true;
 }
 
+//This resets everything to initial zero phase of the calculator"
+function resetCalc () {
+    newD.textContent = "";
+    oldD.textContent = "";
+    protoDisplay = [];
+    opToggle = {number: 0, toggle: false};
+    runEquals = false;
+    operatorUse = false;
+}
+
+// This deletes most recent input
+function deleteInput () {
+    newD.textContent = newD.textContent.slice(0, newD.textContent.length-1);
+}
+
+//Counter to get the calculator to act differently after the first calculation
 function toggleOperator () {
     opToggle.number++
     switch (opToggle.toggle) {
@@ -135,3 +138,54 @@ function checkLast () {
     }
     oldD.textContent += newD.textContent;
 }
+/* 
+if (opToggle.number >1 && opToggle.toggle == false) {
+    newD.textContent = button.textContent;
+    opToggle.toggle = true;
+*/
+function setInput (e) {
+    if (e.key >= 0 || e.key <=9) {
+        if (opToggle.number >1 && opToggle.toggle == false) {
+            newD.textContent = e.key;
+            opToggle.toggle = true;
+        } else {
+            newD.textContent += e.key;
+            operatorUse = false;
+        }
+    } else if (e.key == ".") {
+        newD.textContent += ".";
+    } else if (e.key == "Backspace") {
+        deleteInput();
+    } else if (e.key == "Escape") {
+        resetCalc();
+    } else if (runEquals == false && e.key == "Enter" || e.key == "Return") { 
+            calculate();
+            operatorUse = false;
+    }else if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") {
+        if (operatorUse == false) {
+            operatorUse = true;
+            if (runEquals == false) {
+                protoDisplay.push(newD.textContent, e.key);
+                oldD.textContent += newD.textContent + e.key;
+                newD.textContent = "";
+                toggleOperator();
+                runOperator();
+            } else if (runEquals == true) {
+                protoDisplay.push(e.key);
+                oldD.textContent += e.key;
+                newD.textContent ="";
+                toggleOperator();
+                runOperator();
+                runEquals = false;               
+            }
+        } else if (operatorUse == true && newD.textContent == "") {
+            protoDisplay[protoDisplay.length-1] = e.key;
+            oldD.textContent = oldD.textContent.slice(0, oldD.textContent.length-1) + e.key;
+        }
+    }
+}
+
+//Initialization 
+
+numberInput();
+operatorInput();
